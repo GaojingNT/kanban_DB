@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS kanban_DB;
+USE kanban_DB;
+CREATE TABLE tasks (
+    taskId INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    description VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    assignees VARCHAR(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    status ENUM('No_Status', 'To_Do', 'Doing', 'Done') NOT NULL DEFAULT 'No_Status',
+    createdOn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedOn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

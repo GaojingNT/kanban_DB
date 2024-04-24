@@ -1,0 +1,1 @@
+SELECT * FROM kanban_DB.tasks; 
