@@ -1,11 +1,8 @@
-------- CREATE SCHEMA --------
 CREATE SCHEMA `kanban_DB` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 
-------- USE SCHEMA --------
 
 use  kanban_DB ; 
 
---------- CREATE TABLE --------
 
 CREATE TABLE tasks (
     taskId INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,10 +14,8 @@ CREATE TABLE tasks (
     updatedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
---------- INSERT DATA --------
 
 
--- Row 1
 INSERT INTO tasks (Title, Description, Assignees, Status)
 VALUES (
     'TaskTitle1TaskTitle2TaskTitle3TaskTitle4TaskTitle5TaskTitle6TaskTitle7TaskTitle8TaskTitle9TaskTitle0',
@@ -29,7 +24,6 @@ VALUES (
     'No Status'
 );
 
--- Row 2
 INSERT INTO tasks (Title, description, Assignees, status)
 VALUES (
     'Repository',
@@ -38,7 +32,6 @@ VALUES (
     'To Do'
 );
 
--- Row 3
 INSERT INTO tasks (Title, description, Assignees, status)
 VALUES (
     'ดาต้าเบส',
@@ -47,7 +40,6 @@ VALUES (
     'Doing'
 );
 
--- Row 4
 INSERT INTO tasks (Title, description, Assignees, status)
 VALUES (
     '_Infrastructure_',
