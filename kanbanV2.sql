@@ -32,7 +32,6 @@ CREATE TABLE `tasks` (
   `title` varchar(100) DEFAULT NULL ,
   `description`varchar(500) DEFAULT NULL ,
   `assignees` varchar(30) DEFAULT NULL,
-  `status` enum('No Status', 'To Do', 'Doing', 'Done') NOT NULL DEFAULT 'No Status',
   `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`taskId`),
@@ -40,16 +39,21 @@ CREATE TABLE `tasks` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
  
---
--- Dumping data for table `Task`
---
  
-LOCK TABLES `tasks` WRITE;
-/*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` VALUES (1,'TaskTitle1TaskTitle2TaskTitle3TaskTitle4TaskTitle5TaskTitle6TaskTitle7TaskTitle8TaskTitle9TaskTitle0','Descripti1Descripti2Descripti3Descripti4Descripti5Descripti6Descripti7Descripti8Descripti9Descripti1Descripti1Descripti2Descripti3Descripti4Descripti5Descripti6Descripti7Descripti8Descripti9Descripti2Descripti1Descripti2Descripti3Descripti4Descripti5Descripti6Descripti7Descripti8Descripti9Descripti3Descripti1Descripti2Descripti3Descripti4Descripti5Descripti6Descripti7Descripti8Descripti9Descripti4Descripti1Descripti2Descripti3Descripti4Descripti5Descripti6Descripti7Descripti8Descripti9Descripti5','Assignees1Assignees2Assignees3','NO STATUS','2024-04-22 09:00:00','2024-04-22 09:00:00'),(2,'Repository','','','TO DO','2024-04-22 09:05:00','2024-04-22 14:00:00'),(3,'ดาต้าเบส','ສ້າງຖານຂໍ້ມູນ','あなた、彼、彼女 (私ではありません)','DOING','2024-04-22 09:10:00','2024-04-25 00:00:00'),(4,'_Infrastructure_','_Setup containers_','ไก่งวง กับ เพนกวิน','DONE','2024-04-22 09:15:00','2024-04-22 10:00:00');
-/*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+USE kanban_DB;
+
+CREATE TABLE statuses (
+  statusId INT NOT NULL AUTO_INCREMENT,
+  statusName VARCHAR(50) NOT NULL,
+  statusDescription VARCHAR(200),
+  PRIMARY KEY (statusId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ALTER TABLE tasks
+ADD COLUMN statusId INT not null ,
+ADD CONSTRAINT fk_tasks_statuses
+FOREIGN KEY (statusId) REFERENCES statuses(statusId);
+
  
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -60,3 +64,18 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
  
 -- Dump completed on 2024-04-27 16:31:15
+-- เพิ่มข้อมูลในตาราง statuses
+INSERT INTO statuses (statusName, statusDescription)
+VALUES
+	('NO STATUS', 'Task No status'),
+    ('TO DO', 'Task needs to be started'),
+    ('DOING', 'Task is in progress'),
+    ('DONE', 'Task is completed');
+
+select * from statuses ; 
+-- เพิ่มข้อมูลในตาราง tasks
+INSERT INTO tasks (title, description, assignees, statusId)
+VALUES
+    ('Task 1', 'Description of Task 1', 'User 1', 1),  -- Assuming 1 is the statusId for 'TO DO'
+    ('Task 2', 'Description of Task 2', 'User 2', 2),  -- Assuming 2 is the statusId for 'DOING'
+    ('Task 3', 'Description of Task 3', 'User 3', 3);  -- Assuming 3 is the statusId for 'DONE'
